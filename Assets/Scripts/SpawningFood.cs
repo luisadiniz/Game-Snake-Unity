@@ -13,6 +13,7 @@ public class SpawningFood : MonoBehaviour {
 
 	
 	public void Spawn() {
+
 		int x = (int)Random.Range (borderLeft.position.x, borderRight.position.x);
 
 		int y = (int)Random.Range (borderTop.position.y, borderBottom.position.y);

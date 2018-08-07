@@ -11,12 +11,8 @@ public class SpawningFood : MonoBehaviour {
 	public Transform borderLeft;
 	public Transform borderRight;
 
-	// Use this for initialization
-	void Start () {
-		InvokeRepeating ("Spawn", 3, 4);
-	}
 	
-	void Spawn() {
+	public void Spawn() {
 		int x = (int)Random.Range (borderLeft.position.x, borderRight.position.x);
 
 		int y = (int)Random.Range (borderTop.position.y, borderBottom.position.y);

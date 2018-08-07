@@ -8,9 +8,10 @@ public class Snake : MonoBehaviour {
 	List<Transform> tail = new List<Transform>();
 	bool ate = false;
 	private Vector2 dir = Vector2.right;
+    public GameObject spawningFood;
 
-	// Use this for initialization
-	void Start () {
+
+    void Start () {
 		InvokeRepeating ("Move", 0.3f, 0.3f);	
 	}
 
@@ -37,6 +38,7 @@ public class Snake : MonoBehaviour {
 		if (coll.name.StartsWith ("FoodPrefab")) {
 			ate = true;
 			Destroy (coll.gameObject);
+            spawningFood.GetComponent<SpawningFood>().Spawn(); 
 		} else {
 			//Game Over
 		}

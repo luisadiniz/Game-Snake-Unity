@@ -11,12 +11,15 @@ public class Snake : MonoBehaviour {
     public SpawningFood spawningFood;
     public GUIText gameOverText;
     public Vector2 initialPosition;
+    public GameObject buttonRestart;
 
     public bool gameOver;
 
     void Start () {
         gameOver = false;
         gameOverText.text = "";
+
+        buttonRestart.SetActive(false);
 
         spawningFood.Spawn();                     
         InvokeRepeating ("Move", 0.3f, 0.3f);
@@ -65,6 +68,8 @@ public class Snake : MonoBehaviour {
     void GameOver() {
         gameOver = true;
         gameOverText.text = "Game Over!";
+
+        buttonRestart.SetActive(true);
 	}
 
     // faz as funções do teclado funcionarem para movimentar a cobra

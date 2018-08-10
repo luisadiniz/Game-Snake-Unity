@@ -13,16 +13,22 @@ public class Snake : MonoBehaviour {
     public Vector2 initialPosition;
     public GameObject buttonRestart;
 
+    public GUIText scoreText;
+    public int score;
+
     public bool gameOver;
 
     void Start () {
         gameOver = false;
         gameOverText.text = "";
 
+        score = 0;
+        UpdateScore();
+
         buttonRestart.SetActive(false);
 
         spawningFood.Spawn();                     
-        InvokeRepeating ("Move", 0.3f, 0.3f);
+        InvokeRepeating ("Move", 0.15f, 0.15f);
 	}
 
 	void Move() {
@@ -45,6 +51,7 @@ public class Snake : MonoBehaviour {
 
                 tail.Insert(0, tail.Last());
                 tail.RemoveAt(tail.Count - 1);
+
             }
         }
 	
@@ -57,11 +64,20 @@ public class Snake : MonoBehaviour {
             ate = true;
             Destroy(coll.gameObject);
             spawningFood.Spawn();
+
+            score = score + 10;
+            UpdateScore();
         }
-        if (coll.tag == "Border")       {
+        else if (coll.tag == "Border")       
+        {
             //Game Over
             GameOver();
             Debug.Log("PERDI");
+        }
+        else
+        {
+            Debug.Log("Colidiu!!  ", coll.gameObject);
+            GameOver();
         }
     }
 
@@ -72,15 +88,26 @@ public class Snake : MonoBehaviour {
         buttonRestart.SetActive(true);
 	}
 
+    void AddScore(int newScoreValue) {
+        score += newScoreValue;
+        UpdateScore();
+    }
+
+    // converter o score para uma string no jogo
+    void UpdateScore() {
+        scoreText.text = "Score :" + score;
+    }
+
+
     // faz as funções do teclado funcionarem para movimentar a cobra
 	void Update() {
-		if (Input.GetKey (KeyCode.RightArrow)) {
+		if (Input.GetKey (KeyCode.RightArrow) && dir != Vector2.left) {
 			dir = Vector2.right;
-		} else if (Input.GetKey (KeyCode.DownArrow)) {
-			dir = -Vector2.up;
-		} else if (Input.GetKey (KeyCode.LeftArrow)) {
-			dir = -Vector2.right;
-		} else if (Input.GetKey (KeyCode.UpArrow)) {
+        } else if (Input.GetKey (KeyCode.DownArrow) && dir != Vector2.up) {
+			dir = Vector2.down;
+        } else if (Input.GetKey (KeyCode.LeftArrow) && dir != Vector2.right) {
+			dir = Vector2.left;
+        } else if (Input.GetKey (KeyCode.UpArrow) && dir != Vector2.down) {
 			dir = Vector2.up;
 		}
         else if (Input.GetKey (KeyCode.Space) && gameOver)

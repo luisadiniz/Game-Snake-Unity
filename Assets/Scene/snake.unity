@@ -335,6 +335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodPrefab: {fileID: 1685069753564306, guid: 3aca194abc3a40642b596b5dcfef4a17, type: 2}
+  foodSpecial: {fileID: 1132450599677748, guid: ed36c53dd6f174e14b9bffb45ded01ba,
+    type: 2}
   borderTop: {fileID: 1359291108}
   borderBottom: {fileID: 1741352382}
   borderLeft: {fileID: 1786097635}

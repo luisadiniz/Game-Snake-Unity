@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawningFood : MonoBehaviour {
 
 	public GameObject foodPrefab;
+    public GameObject foodSpecial;
 
 	public Transform borderTop;
 	public Transform borderBottom;
@@ -20,4 +21,16 @@ public class SpawningFood : MonoBehaviour {
 
 		Instantiate (foodPrefab, new Vector2 (x, y), Quaternion.identity);
 	}
+
+    public void SpawnSpecial()
+    {
+        int x = (int)Random.Range(borderLeft.position.x, borderRight.position.x);
+
+        int y = (int)Random.Range(borderTop.position.y, borderBottom.position.y);
+
+
+        GameObject a = Instantiate(foodSpecial, new Vector2(x, y), Quaternion.identity);
+
+        Destroy(a, 4.0f);
+    }
 }

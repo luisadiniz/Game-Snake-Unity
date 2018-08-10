@@ -57,17 +57,36 @@ public class Snake : MonoBehaviour {
 	
 	}
 
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag == "Food")
         {
             ate = true;
             Destroy(coll.gameObject);
-            spawningFood.Spawn();
 
             score = score + 10;
             UpdateScore();
+
+            spawningFood.Spawn();
+
+            int randomNumber = Random.Range(0,100);
+            Debug.Log("Aleatorio " + randomNumber);
+
+            if (randomNumber > 50) {
+                spawningFood.SpawnSpecial(); 
+
+            }
         }
+        else if (coll.tag == "FoodSpecial"){
+            ate = true;
+            Destroy(coll.gameObject);
+
+            score = score + 50;
+            UpdateScore();
+
+        }
+
         else if (coll.tag == "Border")       
         {
             //Game Over
@@ -76,7 +95,6 @@ public class Snake : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Colidiu!!  ", coll.gameObject);
             GameOver();
         }
     }

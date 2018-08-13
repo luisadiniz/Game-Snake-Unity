@@ -14,19 +14,18 @@ public class SpawningFood : MonoBehaviour {
 
 	
 	public void Spawn() {
+        int x = (int)Random.Range (borderLeft.position.x + 2, borderRight.position.x - 2);
 
-		int x = (int)Random.Range (borderLeft.position.x, borderRight.position.x);
-
-		int y = (int)Random.Range (borderTop.position.y, borderBottom.position.y);
+        int y = (int)Random.Range (borderTop.position.y - 2, borderBottom.position.y + 2);
 
 		Instantiate (foodPrefab, new Vector2 (x, y), Quaternion.identity);
 	}
 
     public void SpawnSpecial()
     {
-        int x = (int)Random.Range(borderLeft.position.x, borderRight.position.x);
+        int x = (int)Random.Range(borderLeft.position.x + 2, borderRight.position.x - 2);
 
-        int y = (int)Random.Range(borderTop.position.y, borderBottom.position.y);
+        int y = (int)Random.Range(borderTop.position.y - 2, borderBottom.position.y + 2);
 
 
         GameObject a = Instantiate(foodSpecial, new Vector2(x, y), Quaternion.identity);

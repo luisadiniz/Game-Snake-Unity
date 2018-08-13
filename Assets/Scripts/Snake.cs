@@ -16,6 +16,11 @@ public class Snake : MonoBehaviour {
     public GUIText scoreText;
     public int score;
 
+    public GUIText highScoreText;
+    public int highScore;
+
+    public float velocidade;
+
     public bool gameOver;
 
     void Start () {
@@ -25,10 +30,15 @@ public class Snake : MonoBehaviour {
         score = 0;
         UpdateScore();
 
+        highScore = PlayerPrefs.GetInt("HighScore");
+        UpdateHighScoreUI();
+
         buttonRestart.SetActive(false);
 
+        velocidade = PlayerPrefs.GetFloat("Velocity");
+
         spawningFood.Spawn();                     
-        InvokeRepeating ("Move", 0.15f, 0.15f);
+        InvokeRepeating ("Move", velocidade, velocidade);
 	}
 
 	void Move() {
@@ -84,17 +94,11 @@ public class Snake : MonoBehaviour {
 
             score = score + 50;
             UpdateScore();
-
         }
 
-        else if (coll.tag == "Border")       
-        {
-            //Game Over
-            GameOver();
-            Debug.Log("PERDI");
-        }
         else
         {
+            // COLIDE COM QUALQUER OUTRA COISA QUE NAO EH COMIDA
             GameOver();
         }
     }
@@ -102,8 +106,10 @@ public class Snake : MonoBehaviour {
     void GameOver() {
         gameOver = true;
         gameOverText.text = "Game Over!";
-
         buttonRestart.SetActive(true);
+
+        StoreHighscore(score);
+        UpdateHighScoreUI();
 	}
 
     void AddScore(int newScoreValue) {
@@ -113,7 +119,20 @@ public class Snake : MonoBehaviour {
 
     // converter o score para uma string no jogo
     void UpdateScore() {
-        scoreText.text = "Score :" + score;
+        scoreText.text = "Score : " + score;
+    }
+
+    void UpdateHighScoreUI() {
+        highScoreText.text = "High Score : " + highScore;
+    }
+
+    void StoreHighscore(int newScore){
+        int oldScore = PlayerPrefs.GetInt("HighScore");
+
+        if(newScore > oldScore){
+            PlayerPrefs.SetInt("HighScore", newScore);
+            highScore = newScore;
+        }
     }
 
 

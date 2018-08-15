@@ -5,39 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour {
 
-    public void PlayEasy() {
+    public void PlayGame(float newVelocity) {
         SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.15f);
+        PlayerPrefs.SetFloat("Velocity", newVelocity);
     }
 
-    public void PlayMedium()
-    {
+    public void RestartGame() {
         SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.1f);
-
-    }
-    public void PlayHard()
-    {
-        SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.05f);
     }
 
-
-    public void RestartGameEasy()
-    {
-        SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.15f);
-    }
-
-    public void RestartGameMedium()
-    {
-        SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.1f);
-    }
-
-    public void RestartGameHard()
-    {
-        SceneManager.LoadScene(1);
-        PlayerPrefs.SetFloat("Velocity", 0.05f);
-    }
 }

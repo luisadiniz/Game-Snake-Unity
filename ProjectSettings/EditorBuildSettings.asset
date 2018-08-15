@@ -12,12 +12,12 @@ EditorBuildSettings:
     path: Assets/Scene/PlayGame.unity
     guid: 4ef8c28c36bb44db6bc6de423a97224a
   - enabled: 1
-    path: Assets/Scene/snake easy.unity
+    path: Assets/Scene/snake.unity
     guid: d5d7d25c5e1da1b4ab4a179896322f42
-  - enabled: 1
-    path: Assets/Scene/snake medium.unity
-    guid: 8c9975627a7c4467d90eedb9bd5729a8
-  - enabled: 1
-    path: Assets/Scene/snake hard.unity
-    guid: ce97b74db8ab149ee80a8e7d7b1f4149
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

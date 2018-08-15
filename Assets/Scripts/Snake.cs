@@ -4,40 +4,36 @@ using System.Linq;
 using UnityEngine;
 
 public class Snake : MonoBehaviour {
-	public GameObject tailPrefab;
+    [SerializeField]
+    GameObject tailPrefab;
 	List<Transform> tail = new List<Transform>();
 	bool ate = false;
-	private Vector2 dir = Vector2.right;
-    public SpawningFood spawningFood;
-    public GUIText gameOverText;
-    public Vector2 initialPosition;
-    public GameObject buttonRestart;
+	Vector2 dir = Vector2.right;
 
-    public GUIText scoreText;
-    public int score;
+    [SerializeField]
+    SpawningFood spawningFood;
+    Vector2 initialPosition;
 
-    public GUIText highScoreText;
-    public int highScore;
+    [SerializeField]
+    private float velocidade;
 
-    public float velocidade;
+    [SerializeField]
+    private bool gameOver;
+    [SerializeField]
+    GameObject buttonRestart;
+    [SerializeField]
+    GameUpDate gameUpDate;
 
-    public bool gameOver;
 
     void Start () {
+
         gameOver = false;
-        gameOverText.text = "";
-
-        score = 0;
-        UpdateScore();
-
-        highScore = PlayerPrefs.GetInt("HighScore");
-        UpdateHighScoreUI();
+ 
 
         buttonRestart.SetActive(false);
-
         velocidade = PlayerPrefs.GetFloat("Velocity");
 
-        spawningFood.Spawn();                     
+        spawningFood.Spawn(false);                     
         InvokeRepeating ("Move", velocidade, velocidade);
 	}
 
@@ -75,16 +71,14 @@ public class Snake : MonoBehaviour {
             ate = true;
             Destroy(coll.gameObject);
 
-            score = score + 10;
-            UpdateScore();
+            gameUpDate.AddScore(10);
 
-            spawningFood.Spawn();
+            spawningFood.Spawn(false);
 
             int randomNumber = Random.Range(0,100);
-            Debug.Log("Aleatorio " + randomNumber);
 
             if (randomNumber > 50) {
-                spawningFood.SpawnSpecial(); 
+                spawningFood.Spawn(true); 
 
             }
         }
@@ -92,46 +86,13 @@ public class Snake : MonoBehaviour {
             ate = true;
             Destroy(coll.gameObject);
 
-            score = score + 50;
-            UpdateScore();
+            gameUpDate.AddScore(50);
         }
 
         else
         {
             // COLIDE COM QUALQUER OUTRA COISA QUE NAO EH COMIDA
-            GameOver();
-        }
-    }
-
-    void GameOver() {
-        gameOver = true;
-        gameOverText.text = "Game Over!";
-        buttonRestart.SetActive(true);
-
-        StoreHighscore(score);
-        UpdateHighScoreUI();
-	}
-
-    void AddScore(int newScoreValue) {
-        score += newScoreValue;
-        UpdateScore();
-    }
-
-    // converter o score para uma string no jogo
-    void UpdateScore() {
-        scoreText.text = "Score : " + score;
-    }
-
-    void UpdateHighScoreUI() {
-        highScoreText.text = "High Score : " + highScore;
-    }
-
-    void StoreHighscore(int newScore){
-        int oldScore = PlayerPrefs.GetInt("HighScore");
-
-        if(newScore > oldScore){
-            PlayerPrefs.SetInt("HighScore", newScore);
-            highScore = newScore;
+           GameOver();
         }
     }
 
@@ -151,9 +112,19 @@ public class Snake : MonoBehaviour {
         {
                 gameOver = false;
                 transform.position = initialPosition;
-                gameOverText.text = "";
+                gameUpDate.gameOverText.text = "";
                 // gameOverText.gameObject.SetActive(false); - outra opcao
 
         }
 	}
+
+    public void GameOver()
+    {
+        gameOver = true;
+        gameUpDate.GameOverText();
+        buttonRestart.SetActive(true);
+
+        gameUpDate.StoreHighscore();
+        gameUpDate.UpdateHighScoreUI();
+    }
 }
